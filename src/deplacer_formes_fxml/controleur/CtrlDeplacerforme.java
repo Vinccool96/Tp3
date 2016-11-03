@@ -1,3 +1,6 @@
+/**
+ * @author Maxime Brassard et Vincent Girard
+ */
 package deplacer_formes_fxml.controleur;
 
 import deplacer_formes_fxml.modele.Deplacement;
@@ -25,7 +28,6 @@ public class CtrlDeplacerforme extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/deplacer_formes_fxml/vue/VueDeplacerForme.fxml"));
 		root = loader.load();
 		imageView = (ImageView) root.getChildren().get(0);
@@ -37,10 +39,21 @@ public class CtrlDeplacerforme extends Application {
 
 	}
 
+	/**
+	 * Fonction pricipale au démarrage de l'application
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 
 	}
+
+	/**
+	 * 
+	 * Met en place les écouteurs pour les touches de direction et escape
+	 *
+	 */
 
 	private class EcouteurDeplacement implements EventHandler<KeyEvent> {
 

@@ -1,3 +1,6 @@
+/**
+ * @author Maxime Brassard et Vincent Girard
+ */
 package deplacer_formes_fxml.modele;
 
 import javafx.animation.Interpolator;
@@ -15,8 +18,12 @@ public class Deplacement extends Thread {
 	public DoubleProperty positionX = new SimpleDoubleProperty();
 	public DoubleProperty positionY = new SimpleDoubleProperty();
 	public ImageView imageView;
-	TranslateTransition pathTransition = new TranslateTransition();
+	private TranslateTransition pathTransition = new TranslateTransition();
 
+	/**
+	 * It just does it (Déplace les formes)(It makes your dreams come true!!!)
+	 */
+	
 	@SuppressWarnings("incomplete-switch")
 	private void justDoIt() {
 		if (direction != Direction.AUCUNE) {
@@ -64,6 +71,10 @@ public class Deplacement extends Thread {
 			pathTransition.play();
 		}
 	}
+	
+	/**
+	 * Change l'enum direction et appel justDoIt
+	 */
 
 	private void done() {
 		if (direction == Direction.BAS) {
@@ -77,12 +88,21 @@ public class Deplacement extends Thread {
 		}
 	}
 
+	/**
+	 * Appelé èa la fin des écouteur et commence le JustDoIt
+	 */
 	@Override
 	public void run() {
 		if (!isAlive()) {
 			justDoIt();
 		}
 	}
+	
+	/**
+	 * 
+	 * @param direction
+	 * @param image
+	 */
 
 	public Deplacement(Direction direction, ImageView image) {
 		setDirection(direction);
@@ -92,10 +112,10 @@ public class Deplacement extends Thread {
 		positionX.bindBidirectional(imageView.translateXProperty());
 		positionY.bindBidirectional(imageView.translateYProperty());
 		pathTransition.setOnFinished(new EventHandler<ActionEvent>() {
-			
+
 			@Override
 			public void handle(ActionEvent event) {
-				done();				
+				done();
 			}
 		});
 		run();

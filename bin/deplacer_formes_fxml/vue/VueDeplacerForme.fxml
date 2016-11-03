@@ -4,16 +4,11 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-	minWidth="-Infinity" prefHeight="210.0" prefWidth="210.0"
-	xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="210.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<ImageView id="imageView" fx:id="imageView" fitHeight="30.0"
-			fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="90.0"
-			translateY="90.0">
+		<ImageView id="imageView" fx:id="imageView" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" translateX="90.0" translateY="90.0">
 			<image>
-				<Image url="@../../../res/images/rect.png" />
+				<Image url="@../../../res/images/koala_stand_down.JPG" />
 			</image>
 		</ImageView>
 	</children>

@@ -2,21 +2,16 @@ package deplacer_formes_fxml.controleur;
 
 import deplacer_formes_fxml.modele.Deplacement;
 import deplacer_formes_fxml.modele.Direction;
-import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.ClosePath;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class CtrlDeplacerforme extends Application {
 
@@ -25,6 +20,7 @@ public class CtrlDeplacerforme extends Application {
 	private Pane root;
 
 	private Direction direction;
+	private Direction directionMouvement = Direction.BAS;
 	private Deplacement deplacement;
 
 	@Override
@@ -33,10 +29,12 @@ public class CtrlDeplacerforme extends Application {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/deplacer_formes_fxml/vue/VueDeplacerForme.fxml"));
 		root = loader.load();
 		imageView = (ImageView) root.getChildren().get(0);
+		deplacement = new Deplacement(Direction.AUCUNE, imageView);
 		Scene scene = new Scene(root);
 		scene.addEventHandler(KeyEvent.KEY_RELEASED, new EcouteurDeplacement());
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
 	}
 
 	public static void main(String[] args) {
@@ -49,92 +47,56 @@ public class CtrlDeplacerforme extends Application {
 		@SuppressWarnings("incomplete-switch")
 		@Override
 		public void handle(KeyEvent event) {
+			imageView.translateXProperty().bindBidirectional(deplacement.positionX);
+			imageView.translateYProperty().bindBidirectional(deplacement.positionY);
 			// TODO Auto-generated method stub
 			switch (event.getCode()) {
 			case DOWN:
+				deplacement.interrupt();
 				direction = Direction.BAS;
-				deplacement = Deplacement.ACTIF;
-				move();
+				directionMouvement = Direction.BAS;
+				imageView.setImage(new Image("images/koala_down.gif"));
 				break;
 			case ESCAPE:
-				direction = Direction.AUCUN;
-				deplacement = Deplacement.INACTIF;
-				move();
+				deplacement.interrupt();
+				direction = Direction.AUCUNE;
+				switch (directionMouvement) {
+				case BAS:
+					imageView.setImage(new Image("images/koala_stand_down.JPG"));
+					break;
+				case DROITE:
+					imageView.setImage(new Image("images/koala_stand_right.JPG"));
+					break;
+				case GAUCHE:
+					imageView.setImage(new Image("images/koala_stand_left.JPG"));
+					break;
+				case HAUT:
+					imageView.setImage(new Image("images/koala_stand_up.JPG"));
+					break;
+				}
 				break;
 			case LEFT:
-				direction = Direction.HAUT;
-				deplacement = Deplacement.ACTIF;
-				move();
+				deplacement.interrupt();
+				direction = Direction.GAUCHE;
+				directionMouvement = Direction.GAUCHE;
+				imageView.setImage(new Image("images/koala_left.gif"));
 				break;
 			case RIGHT:
+				deplacement.interrupt();
 				direction = Direction.DROITE;
-				deplacement = Deplacement.ACTIF;
-				move();
+				directionMouvement = Direction.DROITE;
+				imageView.setImage(new Image("images/koala_right.gif"));
 				break;
 			case UP:
+				deplacement.interrupt();
 				direction = Direction.HAUT;
-				deplacement = Deplacement.ACTIF;
-				move();
+				directionMouvement = Direction.HAUT;
+				imageView.setImage(new Image("images/koala_up.gif"));
 				break;
 			}
-
+			deplacement.setDirection(direction);
+			deplacement.run();
 		}
 	}
 
-	@SuppressWarnings("incomplete-switch")
-	private void move() {
-		Path path = new Path();
-		PathTransition pathTransition = new PathTransition();
-
-		path = new Path();
-		pathTransition = new PathTransition();
-		switch (direction) {
-		case BAS:
-			if (imageView.getTranslateY() >= 210 - 30) {
-				deplacement = Deplacement.INACTIF;
-				direction = Direction.AUCUN;
-				path = null;
-			} else {
-				path.getElements().add(new MoveTo(imageView.getTranslateX(), imageView.getTranslateY() + 90));
-			}
-			break;
-		case DROITE:
-			if (imageView.getTranslateX() >= 210 - 30) {
-				deplacement = Deplacement.INACTIF;
-				direction = Direction.AUCUN;
-				path = null;
-			} else {
-				path.getElements().add(new MoveTo(imageView.getTranslateX() + 90, imageView.getTranslateY()));
-			}
-			break;
-		case GAUCHE:
-			if (imageView.getTranslateX() <= 0) {
-				deplacement = Deplacement.INACTIF;
-				direction = Direction.AUCUN;
-				path = null;
-			} else {
-				path.getElements().add(new MoveTo(imageView.getTranslateX() - 90, imageView.getTranslateY()));
-			}
-			break;
-		case HAUT:
-			if (imageView.getTranslateY() <= 0) {
-				deplacement = Deplacement.INACTIF;
-				direction = Direction.AUCUN;
-				path = null;
-			} else {
-				path.getElements().add(new MoveTo(imageView.getTranslateX(), imageView.getTranslateY() - 90));
-			}
-			break;
-		}
-		path.getElements().add(new ClosePath());
-		root.getChildren().add(path);
-		pathTransition.setDuration(Duration.seconds(1));
-		pathTransition.setNode(imageView);
-		pathTransition.setPath(path);
-		pathTransition.setInterpolator(Interpolator.LINEAR);
-		pathTransition.setCycleCount(1);
-		pathTransition.play();
-		root.getChildren().remove(path);
-
-	}
 }

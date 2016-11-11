@@ -1,0 +1,47 @@
+/**
+ * @author 1539762 Maxime Brassard
+ */
+
+ .label{
+	-fx-text-fill: #353575;
+	-fx-font-size: 120%;
+	-fx-font-weight:900;
+}
+
+.stack_pane{
+	-fx-background-color: #ffff99;
+	-fx-border-color: #0000ff;
+	-fx-border-width: 5px;
+	-fx-min-height:550px;
+	-fx-max-height:550px;
+	-fx-min-width:550px;
+	-fx-max-width:550px;
+	-fx-padding:30px 30px 30px 30px;
+}
+
+.textField{
+	-fx-min-width:50px;
+	-fx-max-width:50px;
+}
+
+.vBox{
+	-fx-padding:30px 30px 30px 30px;
+}
+
+.hBox{
+	-fx-min-height:75px;
+}
+
+.button{
+    -fx-background-color: linear-gradient(to bottom, #cce5ff, #0000cc);
+    -fx-border-radius: 40.0;
+    -fx-background-radius: 40.0;
+    -fx-padding: 15.0;
+    -fx-font-size: 160%;
+	-fx-font-weight:900;
+}
+
+.list_view{
+	-fx-max-height:150px;
+}
+
